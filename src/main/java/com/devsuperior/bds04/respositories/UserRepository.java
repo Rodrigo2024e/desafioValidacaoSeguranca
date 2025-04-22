@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.devsuperior.bds04.entities.User;
-import com.smartprocess.dscatalog.projections.UserDetailsProjection;
+import com.devsuperior.bds04.projections.UserDetailsProjection;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

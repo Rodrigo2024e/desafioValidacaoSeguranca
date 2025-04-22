@@ -9,10 +9,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.devsuperior.bds04.dto.UserUpdateDTO;
 import com.devsuperior.bds04.entities.User;
 import com.devsuperior.bds04.resources.exceptions.FieldMessage;
 import com.devsuperior.bds04.respositories.UserRepository;
-import com.smartprocess.dscatalog.dto.UserUpdateDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
