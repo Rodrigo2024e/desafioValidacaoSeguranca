@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.devsuperior.bds04.dto.EventDTO;
 import com.devsuperior.bds04.services.EventService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/events")
 public class EventResource {
@@ -38,7 +40,7 @@ public class EventResource {
 	}
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PostMapping
-	public ResponseEntity<EventDTO> insert(@RequestBody EventDTO dto) {
+	public ResponseEntity<EventDTO> insert(@Valid @RequestBody EventDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();

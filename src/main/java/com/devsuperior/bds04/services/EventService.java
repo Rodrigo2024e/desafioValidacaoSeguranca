@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.bds04.dto.EventDTO;
-import com.devsuperior.bds04.dto.EventDTO;
+import com.devsuperior.bds04.entities.City;
 import com.devsuperior.bds04.entities.Event;
-import com.devsuperior.bds04.entities.Event;
+import com.devsuperior.bds04.respositories.CityRepository;
 import com.devsuperior.bds04.respositories.EventRepository;
 import com.devsuperior.bds04.services.exceptions.DatabaseException;
 import com.devsuperior.bds04.services.exceptions.ResourceNotFoundException;
@@ -25,6 +25,9 @@ public class EventService {
 
 	@Autowired
 	private EventRepository repository;
+	
+	@Autowired
+	private CityRepository cityRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<EventDTO> findAllPaged(Pageable pageable) {
@@ -48,7 +51,7 @@ public class EventService {
 	@Transactional
 	public EventDTO insert(EventDTO dto) {
 		Event entity = new Event();
-		entity.setName(dto.getName());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new EventDTO(entity);
 	}
@@ -79,6 +82,13 @@ public class EventService {
 	   	}
 	}
 	
-	
+	private void copyDtoToEntity(EventDTO dto, Event entity) {
+		entity.setName(dto.getName());
+		entity.setDate(dto.getDate());
+		entity.setUrl(dto.getUrl());
+		
+		Optional<City> cityOptional = cityRepository.findById(dto.getCityId());
+		cityOptional.ifPresent(entity::setCity);
+	}
 	
 }

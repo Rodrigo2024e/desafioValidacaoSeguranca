@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,7 +33,7 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "tb_user_role",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -73,9 +72,6 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return email;
-	}
 	
 	  public void addRole(Role role) {
 	    	roles.add(role);
@@ -117,27 +113,28 @@ public class User implements UserDetails {
 	}
 
 	@Override
+	public String getUsername() {
+		return email;
+	}
+	
+	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 	

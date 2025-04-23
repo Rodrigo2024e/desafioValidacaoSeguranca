@@ -1,11 +1,11 @@
 package com.devsuperior.bds04.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +25,9 @@ public class CityService {
 	private CityRepository repository;
 	
 	@Transactional(readOnly = true)
-	public Page<CityDTO> findAllPaged(Pageable pageable) {
-		Page<City> list = repository.findAll(pageable);
-		return list.map(x -> new CityDTO(x));
+	public List<CityDTO> findAll() {
+		List<City> list = repository.findAll(Sort.by("name"));
+		return list.stream().map(x -> new CityDTO(x)).toList();
 	}
 
 	@Transactional(readOnly = true)
